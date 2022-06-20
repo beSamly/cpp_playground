@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package Protocol;
+
+message EquipItem{
+	uint64 SlotIndex = 1;
+	uint64 EquipItemIndex = 2;
+}

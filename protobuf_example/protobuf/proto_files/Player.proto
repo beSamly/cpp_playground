@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package Protocol;
+
+import "EquipItem.proto";
+
+message Player{
+	uint64 AccountId = 1;
+	string Username = 2;
+	repeated EquipItem EquipItems = 3;
+}

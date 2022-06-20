@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Protobuf">
+      <UniqueIdentifier>{daea1cee-f04f-4096-ad54-c66200c7ea37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Protobuf\proto_files">
+      <UniqueIdentifier>{eb8087af-8d27-4a9a-bed4-7fe0613c70bf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="protobuf\EquipItem.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="protobuf\Player.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="protobuf\SearchRequest.pb.cc">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="protobuf\proto_files\EquipItem.proto">
+      <Filter>Source Files\Protobuf\proto_files</Filter>
+    </None>
+    <None Include="protobuf\proto_files\Player.proto">
+      <Filter>Source Files\Protobuf\proto_files</Filter>
+    </None>
+    <None Include="protobuf\proto_files\SearchRequest.proto">
+      <Filter>Source Files\Protobuf\proto_files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="protobuf\EquipItem.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="protobuf\Player.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="protobuf\SearchRequest.pb.h">
+      <Filter>Source Files\Protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
