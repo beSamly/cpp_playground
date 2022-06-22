@@ -21,7 +21,37 @@ class Session : public IocpObject
 	{
 		BUFFER_SIZE = 0x10000, // 64KB
 	};
+/*---------------------
+	Member Variables
+----------------------*/
+private:
+	weak_ptr<Service>		_service;
+	SOCKET					_socket = INVALID_SOCKET;
+	NetAddress				_netAddress = {};
+	Atomic<bool>			_connected = false;
 
+private:
+	USE_LOCK;
+
+	/* 수신 관련 */
+	RecvBuffer				_recvBuffer;
+
+	/* 송신 관련 */
+	Queue<SendBufferRef>	_sendQueue;
+	Atomic<bool>			_sendRegistered = false;
+
+	BaseSocketServerRef		_server;
+
+private:
+	/* IocpEvent 재사용 */
+	ConnectEvent			_connectEvent;
+	DisconnectEvent			_disconnectEvent;
+	RecvEvent				_recvEvent;
+	SendEvent				_sendEvent;
+
+/*------------------
+		Method
+-------------------*/
 public:
 	Session();
 	virtual ~Session();
@@ -31,8 +61,8 @@ public:
 	void				Send(SendBufferRef sendBuffer);
 	bool				Connect();
 	void				Disconnect(const WCHAR* cause);
+	void				SetOwner(BaseSocketServerRef server) { _server = server; }
 
-public:
 						/* 정보 관련 */
 	void				SetNetAddress(NetAddress address) { _netAddress = address; }
 	NetAddress			GetAddress() { return _netAddress; }
@@ -42,8 +72,8 @@ public:
 
 private:
 						/* 인터페이스 구현 */
-	HANDLE		GetHandle() override;
-	void		HandleIocpEvent(class IocpEvent* iocpEvent, int32 numOfBytes = 0) override;
+	HANDLE				GetHandle() override;
+	void				HandleIocpEvent(class IocpEvent* iocpEvent, int32 numOfBytes = 0) override;
 
 private:
 						/* 전송 관련 */
@@ -66,26 +96,4 @@ protected:
 	virtual void		OnSend(int32 len) abstract;
 	virtual void		OnDisconnected() abstract;
 
-private:
-	weak_ptr<Service>	_service;
-	SOCKET				_socket = INVALID_SOCKET;
-	NetAddress			_netAddress = {};
-	Atomic<bool>		_connected = false;
-
-private:
-	USE_LOCK;
-
-							/* 수신 관련 */
-	RecvBuffer				_recvBuffer;
-
-							/* 송신 관련 */
-	Queue<SendBufferRef>	_sendQueue;
-	Atomic<bool>			_sendRegistered = false;
-
-private:
-						/* IocpEvent 재사용 */
-	ConnectEvent		_connectEvent;
-	DisconnectEvent		_disconnectEvent;
-	RecvEvent			_recvEvent;
-	SendEvent			_sendEvent;
 };

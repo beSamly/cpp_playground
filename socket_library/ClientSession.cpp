@@ -41,7 +41,7 @@ int32 ClientSession::OnRecv(BYTE* buffer, int32 len)
 
 void ClientSession::OnConnected()
 {
-	//GSessionManager.Add(static_pointer_cast<ClientSession>(shared_from_this()));
+	
 }
 
 void ClientSession::OnDisconnected()

@@ -2,6 +2,7 @@
 #include "Session.h"
 #include "SocketUtils.h"
 #include "SendBuffer.h"
+#include "BaseSocketServer.h"
 
 /*--------------
 	Session
@@ -199,7 +200,7 @@ void Session::RegisterSend()
 			_sendEvent.sendBuffers.clear(); // RELEASE_REF
 			_sendRegistered.store(false);
 		}
-	}
+	} 
 }
 
 void Session::ProcessConnect()
@@ -208,6 +209,8 @@ void Session::ProcessConnect()
 
 	_connected.store(true);
 
+	// 세션을 등록하는 부분은 비지니스 로직이기 때문에 OnConnected를 구현하는 부에서 해줘야 한다고
+	// 생각하여 일단 주석처리
 	// 세션 등록
 	//GetService()->AddSession(GetSessionRef());
 
@@ -221,8 +224,9 @@ void Session::ProcessConnect()
 void Session::ProcessDisconnect()
 {
 	_disconnectEvent.owner = nullptr; // RELEASE_REF
-
+	_server->OnDisconnected(static_pointer_cast<Session>(shared_from_this()));
 	OnDisconnected(); // 컨텐츠 코드에서 재정의
+	// 세션을 릴리즈 하는 부분도 비지니스 로직이기 구현부에서 처리 해줘야 한다고 생각하여 일단 주석처리
 	//GetService()->ReleaseSession(GetSessionRef());
 }
 

@@ -20,24 +20,37 @@ BaseSocketServer::~BaseSocketServer()
 	}
 }
 
+IocpCoreRef BaseSocketServer::GetIocpCore()
+{
+	return _iocpCore;
+}
+
 bool BaseSocketServer::StartAccept()
 {
+	// 소켓 초기화 및 ConnectEx, DisconnectEx, AcceptEx 함수 주소 바인딩
+	SocketUtils::Init();
+
+	// 서버 소켓 생성
 	_socket = SocketUtils::CreateSocket();
 	if (_socket == INVALID_SOCKET)
 		return false;
 
+	// IOCP 포트에 서버 소켓 등록
 	if (_iocpCore->Register(shared_from_this()) == false)
 		return false;
 
+	// 옵션 세팅
 	if (SocketUtils::SetReuseAddress(_socket, true) == false)
 		return false;
 
 	if (SocketUtils::SetLinger(_socket, 0, 0) == false)
 		return false;
 
+	// 소켓을 netAddress 에 바인딩
 	if (SocketUtils::Bind(_socket, _netAddress) == false)
 		return false;
 
+	// Listen 시작
 	if (SocketUtils::Listen(_socket) == false)
 		return false;
 
@@ -109,5 +122,9 @@ void BaseSocketServer::ProcessAccept(AcceptEvent* acceptEvent)
 
 	session->SetNetAddress(NetAddress(sockAddress));
 	session->ProcessConnect();
+
+	// BaseSocketServer의 구현부에서 세션이 연결되어 생성되었을 때 실행할 함수 호출
+	OnConnected(session);
+
 	RegisterAccept(acceptEvent);
 }

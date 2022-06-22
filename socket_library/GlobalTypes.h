@@ -6,6 +6,8 @@
 #include <iostream>
 #include <deque>
 #include <queue>
+#include <utility>
+#include <set>
 
 using BYTE = unsigned char;
 using int8 = __int8;
@@ -49,13 +51,17 @@ using std::dynamic_pointer_cast;
 using std::thread;
 using std::wstring;
 using std::make_shared;
+using std::this_thread::sleep_for;
 
-template<typename Type, typename... Args>
-std::shared_ptr<Type> MakeShared(Args&&... args)
+template<typename type, typename... Args>
+std::shared_ptr<type> MakeShared(Args&&... args)
 {
-	//return std::shared_ptr<Type>{ new<Type>(forward<Args>(args)...), xdelete<Type> };
-	return std::shared_ptr<Type>(args...);
+	//return std::shared_ptr<type>{ new<type>(forward<args>(args)...), xdelete<type> };
+	//return std::shared_ptr<type>(std::forward<args>(args)...);
+	return std::make_shared<type>(std::forward<Args>(args)...);
 }
+
+
 
 //Container
 template<typename Type>
@@ -63,3 +69,6 @@ using Vector = std::vector<Type>;
 
 template<typename Type, typename Container = std::deque<Type>>
 using Queue = std::queue<Type, Container>;
+
+template<typename Key, typename Pred = std::less<Key>>
+using Set = std::set<Key, Pred>;
