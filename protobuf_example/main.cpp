@@ -1,6 +1,7 @@
 #include <iostream>
 #include "protobuf/Player.pb.h"
 #include "protobuf/EquipItem.pb.h"
+#include "protobuf/SearchRequest.pb.h"
 #include "PacketHandler.h"
 
 #ifdef _DEBUG
@@ -35,9 +36,30 @@ void onPacketArrive(unsigned char* buffer) {
 	}
 }
 
+class MyTest {
+public:
+	int itemIndex;
+	int equipItemSlot;
+
+public:
+	int add() {
+		return itemIndex + equipItemSlot;
+	}
+
+	int sub() {
+		return itemIndex - equipItemSlot;
+	}
+};
+
 int main()
 {
+	auto sizeOfMyTest = sizeof(MyTest);
+	MyTest t1;
+	auto sizeOft1 = sizeof(t1);
+	auto sizeOfInt = sizeof(t1.itemIndex);
+
 	Protocol::Player player;
+	Protocol::SearchRequest s1;
 
 	player.set_accountid(1256);
 	player.set_username("Samuel Lee");
@@ -56,6 +78,9 @@ int main()
 
 	auto buffer = PacketHandler::protoToBuffer(player);
 	onPacketArrive(buffer);
+
+	auto asd = sizeof(player);
+	auto sdf = sizeof(*item1);
 
 
 	//Protocol::Player player;

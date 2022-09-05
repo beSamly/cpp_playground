@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -41,6 +42,10 @@ void get_instance_as_ptr(Person* p) {
 void main() {
 	{
 		auto job_ref = make_shared<Job>();
+
+		//std::vector<Person> personVector = new std::vector<Person>({ Person("test1", job_ref) });
+		std::vector<Person> personVector{ Person("test1", job_ref), Person("test2", job_ref) , Person("test3", job_ref) };
+
 		cout << "----------------get_instance--------------------" << endl;
 		Person p("Sam lee", job_ref);
 		job_ref = nullptr;

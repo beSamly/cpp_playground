@@ -1,7 +1,9 @@
 #include <iostream>
 #include <Windows.h>
+#include <memory>
 #include <sql.h>
 #include <sqlext.h>
+#include "main.h"
 
 using std::string;
 using std::cout;
@@ -109,10 +111,13 @@ void read_account_id_table(SQLHSTMT statement) {
 	if (ret_account_id_binding != SQL_SUCCESS && ret_account_id_binding != SQL_SUCCESS_WITH_INFO)
 	{
 	}
+	
+	auto testPtr = std::make_shared<WCHAR[]>(50);
+	WCHAR* outSurname = testPtr.get();
+	auto size = wcslen(outSurname);
 
-	WCHAR outSurname[50];
 	SQLLEN outSurnameLen = 0;
-	SQLRETURN ret_surname_binding = ::SQLBindCol(statement, 2, SQL_C_WCHAR, &outSurname, sizeof(outSurname), &outSurnameLen);
+	SQLRETURN ret_surname_binding = ::SQLBindCol(statement, 2, SQL_C_WCHAR, outSurname, 50, &outSurnameLen);
 	if (ret_surname_binding != SQL_SUCCESS && ret_surname_binding != SQL_SUCCESS_WITH_INFO)
 	{
 		extract_error("SQLDriverConnectW ", statement, SQL_HANDLE_STMT);
@@ -146,7 +151,7 @@ void read_account_id_table(SQLHSTMT statement) {
 	/*---------------------------
 	|		    SQL ½ÇÇà		    |
 	----------------------------*/
-	auto query = L"SELECT AccountId, Surname, IsAdmin, CreatedAt FROM [dbo].[Account] WHERE AccountId > (?)";
+	auto query = L"SELECT AccountId, Surname, IsAdmin, CreatedAt FROM [dbo].[Test] WHERE AccountId > (?)";
 	SQLRETURN ret_execute = ::SQLExecDirectW(statement, (SQLWCHAR*)query, SQL_NTSL);
 	if (ret_execute == SQL_SUCCESS || ret_execute == SQL_SUCCESS_WITH_INFO) {
 
@@ -158,7 +163,7 @@ void read_account_id_table(SQLHSTMT statement) {
 	/*---------------------------
 	|	   SQL result fetch     |
 	----------------------------*/
-	while (do_fetch(statement)) {
+ 	while (do_fetch(statement)) {
 		std::wcout << "AccountId: " << outAccountId << " Surname : " << outSurname << "IsAdmin " << isAdmin << std::endl;
 	}
 
