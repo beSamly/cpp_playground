@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include <sql.h>
 #include <sqlext.h>
-#include "main.h"
 
 using std::cout;
 using std::string;
@@ -51,7 +50,7 @@ SQLHSTMT createstatement(const WCHAR* connectionString) {
 	WCHAR resultString[MAX_PATH] = { 0 };
 	SQLSMALLINT resultStringLen = 0;
 
-	SQLRETURN ret = ::SQLDriverConnectW(
+	SQLRETURN ret = ::SQLDriverConnect(
 		_connection,
 		NULL,
 		reinterpret_cast<SQLWCHAR*>(stringBuffer),
@@ -63,13 +62,13 @@ SQLHSTMT createstatement(const WCHAR* connectionString) {
 	);
 
 	if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO) {
-		extract_error("SQLDriverConnectW ", _connection, SQL_HANDLE_DBC);
+		extract_error("SQLDriverConnect ", _connection, SQL_HANDLE_DBC);
 		return nullptr;
 	}
 
 	auto hanle_statement_result = ::SQLAllocHandle(SQL_HANDLE_STMT, _connection, &statement);
 	if (hanle_statement_result != SQL_SUCCESS) {
-		extract_error("SQLDriverConnectW ", statement, SQL_HANDLE_STMT);
+		extract_error("SQLDriverConnect ", statement, SQL_HANDLE_STMT);
 		return nullptr;
 	};
 
@@ -92,8 +91,8 @@ void call_precedure(SQLHSTMT statement) {
 
 	// 위의 코드처럼 Param binding을 할 때 SWORD타입의 데이터의 레퍼런스를 넣어줘도 되고 아니면 아래처럼 int32로 명시해주어도 된다.
 	// 다만 데이터를 받아와서 쓸 때 컨버팅이 필요.
-	__int32 outParmValue= 0;
-	__int32 outReturnValue= 0;
+	__int32 outParmValue = 0;
+	__int32 outReturnValue = 0;
 
 	// Bind the return code to variable sParm1.  
 	retcode = SQLBindParameter(statement, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_INTEGER, 0, 0, &outParmValue, 0, &cbParm1);
@@ -123,8 +122,7 @@ void call_precedure(SQLHSTMT statement) {
 	printf("Before result sets cleared: RetCode = %d, OutParm = %d.\n", sParm1, sParm2);
 
 	// Clear any result sets generated.  
-	while ((retcode = SQLMoreResults(statement)) != SQL_NO_DATA)
-		;
+	while ((retcode = SQLMoreResults(statement)) != SQL_NO_DATA);
 
 	// Show parameters are now filled.  
 	std::cout << "outParmValue is " << outParmValue << std::endl;
@@ -139,9 +137,9 @@ Reference : https://docs.microsoft.com/en-us/sql/relational-databases/native-cli
 int main() {
 	// Trusted_Connection 를 제공하지 않으면 Username, password 를 넣어줘야 한다
 	// DRIVER 매우 중요하다.. 잘못된 Driver을 넣으면 연결 불가하다
-	//auto connectionString = L"DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;Database=FS2_GAME;Trusted_Connection=Yes;";
-	auto connectionString = L"DRIVER={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-S46ITDN;Database=FS2_GAME;UID=SC_FS2USER;PWD=f$ei#L!;";
-	
+	auto connectionString = L"FILEDSN=E:/Joycity/FS2/Program/Branches/master/Server/Output/_FS2_KOR_DEV_DEBUG_x64/FSGameServer/FS2_GAME.dsn;UID=SC_FS2USER;PWD=f$ei#L!;";
+	//auto connectionString = L"DRIVER={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-S46ITDN;Database=FS2_GAME;UID=SC_FS2USER;PWD=f$ei#L!;";
+
 	SQLHSTMT statement = createstatement(connectionString);
 	call_precedure(statement);
 }
