@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exec_stored_procedure", "ex
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "db_connection_with_dsn", "db_connection_with_dsn\db_connection_with_dsn.vcxproj", "{BFC8419D-6DA3-4BBB-8935-C90BD2F602F6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp_linq", "cpp_linq\cpp_linq.vcxproj", "{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -267,6 +269,22 @@ Global
 		{BFC8419D-6DA3-4BBB-8935-C90BD2F602F6}.Release|x64.Build.0 = Release|x64
 		{BFC8419D-6DA3-4BBB-8935-C90BD2F602F6}.Release|x86.ActiveCfg = Release|Win32
 		{BFC8419D-6DA3-4BBB-8935-C90BD2F602F6}.Release|x86.Build.0 = Release|Win32
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Debug|ARM.ActiveCfg = Debug|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Debug|ARM.Build.0 = Debug|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Debug|ARM64.ActiveCfg = Debug|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Debug|ARM64.Build.0 = Debug|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Debug|x64.ActiveCfg = Debug|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Debug|x64.Build.0 = Debug|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Debug|x86.ActiveCfg = Debug|Win32
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Debug|x86.Build.0 = Debug|Win32
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Release|ARM.ActiveCfg = Release|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Release|ARM.Build.0 = Release|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Release|ARM64.ActiveCfg = Release|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Release|ARM64.Build.0 = Release|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Release|x64.ActiveCfg = Release|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Release|x64.Build.0 = Release|x64
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Release|x86.ActiveCfg = Release|Win32
+		{4711EC96-11FD-49EE-A3E1-BFF0DD63267B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
