@@ -1,14 +1,14 @@
 #include "pch.h"
+
 #include "../logger_class/logger.cpp"
 #include "../logger_class/logger.h"
 
 TEST(LoggerClassTest, TestCase1)
 {
     Logger logger;
-    logger.Info("testing");
-    logger.Debug("asdfsa");
 
-    EXPECT_EQ(1, 1);
+    EXPECT_EQ(1, 3) << "1 is not 3!!!!!";
+            
     EXPECT_TRUE(true);
 }
 
