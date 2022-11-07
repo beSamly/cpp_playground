@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "../logger_class/logger.h"
 #include "../logger_class/logger.cpp"
+#include "../logger_class/logger.h"
 
 TEST(LoggerClassTest, TestCase1)
 {
