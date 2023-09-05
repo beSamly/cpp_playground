@@ -39,6 +39,15 @@ class Person {
 };
 
 int main() {
+
+    { Person p1;
+      p1.GetWalletAsRef().balance = 15;
+      p1.PrintBalance();
+
+      Person p2 = p1;
+      p2.PrintBalance();
+    }
+
   // Test 1
   cout << "================Test1 Start===============" << endl;
   {
